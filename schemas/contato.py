@@ -63,7 +63,7 @@ def apresenta_contato(contato: Contato):
         ContatoViewSchema.
     """
     return {
-        "id": produto.id,
+        "id": contato.id,
         "nome": contato.nome,
         "celular": contato.celular,
         "email": contato.email,
