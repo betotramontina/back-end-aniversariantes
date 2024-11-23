@@ -99,7 +99,7 @@ def get_contato(query: ContatoBuscaSchema):
     contato = session.query(Contato).filter(Contato.id == contato_id).first()
 
     if not contato:
-        # se o produto não foi encontrado
+        # se o contato não foi encontrado
         error_msg = "Contato não encontrado :/"
         logger.warning(f"Erro ao buscar contato '{contato_id}', {error_msg}")
         return {"message": error_msg}, 404
