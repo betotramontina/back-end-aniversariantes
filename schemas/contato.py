@@ -19,7 +19,7 @@ class ContatoBuscaSchema(BaseModel):
     nome: str = "Carlos Araujo"
 
 
-class ListagemContatoSchema(BaseModel):
+class ListagemContatosSchema(BaseModel):
     """ Define como uma listagem de contatos será retornada.
     """
     contatos:List[ContatoSchema]
