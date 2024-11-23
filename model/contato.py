@@ -9,7 +9,7 @@ from  model import Base
 class Contato(Base):
     __tablename__ = 'contato'
 
-    id = Column("pk_produto", Integer, primary_key=True)
+    id = Column("pk_contato", Integer, primary_key=True)
     nome = Column(String(50), unique=True)
     celular = Column(String(11))
     email = Column(String(50))
