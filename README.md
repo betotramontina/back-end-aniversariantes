@@ -1,6 +1,7 @@
 # back-end-listadecontatos
 MVP - Roberto Tramontina Araujo - Disciplina: Sprint: Desenvolvimento Full Stack Básico - Lista de Contatos
 
+Instalar python
 Cria ambiente virtual: python -m venv venv_api
 Ativa o ambiente virtual: venv_api\Scripts\activate
 Mesmo retirando as versões de todos os requirements, foi preciso instalar a versão: python -m pip install "pip<24.1" para conseguir concluir a instalação dos requirements.
