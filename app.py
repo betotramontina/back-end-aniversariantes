@@ -4,7 +4,7 @@ from urllib.parse import unquote
 
 from sqlalchemy.exc import IntegrityError
 
-from model import Session, Produto, Comentario
+from model import Session, Contato
 from logger import logger
 from schemas import *
 from flask_cors import CORS
@@ -15,8 +15,7 @@ CORS(app)
 
 # definindo tags
 home_tag = Tag(name="Documentação", description="Seleção de documentação: Swagger, Redoc ou RapiDoc")
-produto_tag = Tag(name="Produto", description="Adição, visualização e remoção de produtos à base")
-comentario_tag = Tag(name="Comentario", description="Adição de um comentário à um produtos cadastrado na base")
+contato_tag = Tag(name="Contato", description="Adição, visualização e remoção de contato da base")
 
 
 @app.get('/', tags=[home_tag])
@@ -26,62 +25,63 @@ def home():
     return redirect('/openapi')
 
 
-@app.post('/produto', tags=[produto_tag],
-          responses={"200": ProdutoViewSchema, "409": ErrorSchema, "400": ErrorSchema})
-def add_produto(form: ProdutoSchema):
-    """Adiciona um novo Produto à base de dados
+@app.post('/contato', tags=[contato_tag],
+          responses={"200": ContatoViewSchema, "409": ErrorSchema, "400": ErrorSchema})
+def add_contato(form: ContatoSchema):
+    """Adiciona um novo contato à base de dados
 
-    Retorna uma representação dos produtos e comentários associados.
+    Retorna uma representação dos contatos.
     """
-    produto = Produto(
+    contato = Contato(
         nome=form.nome,
-        quantidade=form.quantidade,
-        valor=form.valor)
-    logger.debug(f"Adicionando produto de nome: '{produto.nome}'")
+        celular=form.celular,
+        email=form.email,
+        data_nascimento=form.data_nascimento)
+    logger.debug(f"Adicionando contato de nome: '{contato.nome}'")
     try:
         # criando conexão com a base
         session = Session()
         # adicionando produto
-        session.add(produto)
+        session.add(contato)
         # efetivando o camando de adição de novo item na tabela
         session.commit()
-        logger.debug(f"Adicionado produto de nome: '{produto.nome}'")
-        return apresenta_produto(produto), 200
+        logger.debug(f"Adicionado contato de nome: '{contato.nome}'")
+        return apresenta_contato(contato), 200
 
     except IntegrityError as e:
         # como a duplicidade do nome é a provável razão do IntegrityError
-        error_msg = "Produto de mesmo nome já salvo na base :/"
-        logger.warning(f"Erro ao adicionar produto '{produto.nome}', {error_msg}")
-        return {"mesage": error_msg}, 409
+        error_msg = "Contato de mesmo nome já cadastrado :/"
+        logger.warning(f"Erro ao adicionar contato '{contato.nome}', {error_msg}")
+        return {"message": error_msg}, 409
 
     except Exception as e:
         # caso um erro fora do previsto
-        error_msg = "Não foi possível salvar novo item :/"
-        logger.warning(f"Erro ao adicionar produto '{produto.nome}', {error_msg}")
-        return {"mesage": error_msg}, 400
+        error_msg = "Não foi possível adicionar esse novo contato :/"
+        logger.warning(f"Erro ao adicionar contato '{contato.nome}', {error_msg}")
+        return {"message": error_msg}, 400
 
 
-@app.get('/produtos', tags=[produto_tag],
-         responses={"200": ListagemProdutosSchema, "404": ErrorSchema})
-def get_produtos():
-    """Faz a busca por todos os Produto cadastrados
+@app.get('/contatos', tags=[contato_tag],
+         responses={"200": ListagemContatosSchema, "404": ErrorSchema})
+def get_contatos():
+    """Faz a busca por todos os contatos cadastrados
 
-    Retorna uma representação da listagem de produtos.
+    Retorna uma representação da listagem de contatos.
     """
-    logger.debug(f"Coletando produtos ")
+    logger.debug(f"Coletando contatos ")
     # criando conexão com a base
     session = Session()
     # fazendo a busca
-    produtos = session.query(Produto).all()
+    contatos = session.query(Contato).all()
 
-    if not produtos:
-        # se não há produtos cadastrados
-        return {"produtos": []}, 200
+    if not contatos:
+        # se não há contatos cadastrados
+        return {"contatos": []}, 200
     else:
-        logger.debug(f"%d rodutos econtrados" % len(produtos))
-        # retorna a representação de produto
-        print(produtos)
-        return apresenta_produtos(produtos), 200
+        logger.debug(f"%d contatos encontrados" % len(contatos))
+        # retorna a representação de contato
+        print(contatos)
+        return apresenta_contatos(contatos), 200
 
 
 @app.get('/produto', tags=[produto_tag],
