@@ -12,8 +12,8 @@ class Contato(Base):
     id = Column("pk_produto", Integer, primary_key=True)
     nome = Column(String(50), unique=True)
     celular = Column(String(11))
-    email = Column(String(50)
-    data_nascimento = Column(String(10)
+    email = Column(String(50))
+    data_nascimento = Column(String(10))
     data_insercao = Column(DateTime, default=datetime.now())
 
     
