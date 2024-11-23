@@ -32,7 +32,7 @@ class Contato(Base):
         self.nome = nome
         self.celular = celular
         self.email = email
-        self.data_nascimento = aniversario
+        self.data_nascimento = data_nascimento
 
         # se não for informada, será o data exata da inserção no banco
         if data_insercao:
