@@ -87,21 +87,21 @@ def get_contatos():
 @app.get('/contato', tags=[contato_tag],
          responses={"200": ContatoViewSchema, "404": ErrorSchema})
 def get_contato(query: ContatoBuscaSchema):
-    """Faz a busca por um contato a partir do seu id
+    """Faz a busca por um contato a partir do seu nome
 
     Retorna uma representação dos contatos.
     """
-    contato_id = query.id
-    logger.debug(f"Coletando dados sobre contato #{contato_id}")
+    contato_nome = query.nome
+    logger.debug(f"Coletando dados sobre contato #{contato_nome}")
     # criando conexão com a base
     session = Session()
     # fazendo a busca
-    contato = session.query(Contato).filter(Contato.id == contato_id).first()
+    contato = session.query(Contato).filter(Contato.nome == contato_nome).first()
 
     if not contato:
         # se o contato não foi encontrado
         error_msg = "Contato não encontrado :/"
-        logger.warning(f"Erro ao buscar contato '{contato_id}', {error_msg}")
+        logger.warning(f"Erro ao buscar contato '{contato_nome}', {error_msg}")
         return {"message": error_msg}, 404
     else:
         logger.debug(f"Contato econtrado: '{contato.nome}'")
