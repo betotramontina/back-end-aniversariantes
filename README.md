@@ -9,6 +9,6 @@ Instalar os requirements: pip install -r requirements.txt
 pip install "pydantic<2.0,>=1.8"
 pip install --upgrade flask-openapi3
 pip install --upgrade flask werkzeug
-pip install -U flask-openapi3[swagger, redoc, rapidoc, rapipdf, scalar, elements]
+pip install flask-swagger-ui
 Para executar a API: flask run --host 0.0.0.0 --port 5000
 
