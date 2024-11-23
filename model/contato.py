@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, DateTime, Float
+from sqlalchemy import Column, String, Integer, DateTime
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from typing import Union
@@ -27,7 +27,7 @@ class Contato(Base):
             celular: número do celular do contato
             email: email do contato
             data_nascimento: data de nascimento/ aniversário do contato
-            data_insercao: data de quando o produto foi inserido à base
+            data_insercao: data de inserção do contato na base de dados
         """
         self.nome = nome
         self.celular = celular
