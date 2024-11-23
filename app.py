@@ -84,87 +84,55 @@ def get_contatos():
         return apresenta_contatos(contatos), 200
 
 
-@app.get('/produto', tags=[produto_tag],
-         responses={"200": ProdutoViewSchema, "404": ErrorSchema})
-def get_produto(query: ProdutoBuscaSchema):
-    """Faz a busca por um Produto a partir do id do produto
+@app.get('/contato', tags=[contato_tag],
+         responses={"200": ContatoViewSchema, "404": ErrorSchema})
+def get_contato(query: ContatoBuscaSchema):
+    """Faz a busca por um contato a partir do seu id
 
-    Retorna uma representação dos produtos e comentários associados.
+    Retorna uma representação dos contatos.
     """
-    produto_id = query.id
-    logger.debug(f"Coletando dados sobre produto #{produto_id}")
+    contato_id = query.id
+    logger.debug(f"Coletando dados sobre contato #{contato_id}")
     # criando conexão com a base
     session = Session()
     # fazendo a busca
-    produto = session.query(Produto).filter(Produto.id == produto_id).first()
+    contato = session.query(Contato).filter(Contato.id == contato_id).first()
 
-    if not produto:
+    if not contato:
         # se o produto não foi encontrado
-        error_msg = "Produto não encontrado na base :/"
-        logger.warning(f"Erro ao buscar produto '{produto_id}', {error_msg}")
-        return {"mesage": error_msg}, 404
+        error_msg = "Contato não encontrado :/"
+        logger.warning(f"Erro ao buscar contato '{contato_id}', {error_msg}")
+        return {"message": error_msg}, 404
     else:
-        logger.debug(f"Produto econtrado: '{produto.nome}'")
-        # retorna a representação de produto
-        return apresenta_produto(produto), 200
+        logger.debug(f"Contato econtrado: '{contato.nome}'")
+        # retorna a representação de contato
+        return apresenta_contato(contato), 200
 
 
-@app.delete('/produto', tags=[produto_tag],
-            responses={"200": ProdutoDelSchema, "404": ErrorSchema})
-def del_produto(query: ProdutoBuscaSchema):
-    """Deleta um Produto a partir do nome de produto informado
+@app.delete('/contato', tags=[contato_tag],
+            responses={"200": ContatoDelSchema, "404": ErrorSchema})
+def del_contato(query: ContatoBuscaSchema):
+    """Deleta um contato a partir do nome informado
 
     Retorna uma mensagem de confirmação da remoção.
     """
-    produto_nome = unquote(unquote(query.nome))
-    print(produto_nome)
-    logger.debug(f"Deletando dados sobre produto #{produto_nome}")
+    contato_nome = unquote(unquote(query.nome))
+    print(contato_nome)
+    logger.debug(f"Deletando dados sobre o contato #{contato_nome}")
     # criando conexão com a base
     session = Session()
     # fazendo a remoção
-    count = session.query(Produto).filter(Produto.nome == produto_nome).delete()
+    count = session.query(Contato).filter(Contato.nome == contato_nome).delete()
     session.commit()
 
     if count:
         # retorna a representação da mensagem de confirmação
-        logger.debug(f"Deletado produto #{produto_nome}")
-        return {"mesage": "Produto removido", "id": produto_nome}
+        logger.debug(f"Contato deletado #{contato_nome}")
+        return {"message": "Contato removido", "id": contato_nome}
     else:
-        # se o produto não foi encontrado
-        error_msg = "Produto não encontrado na base :/"
-        logger.warning(f"Erro ao deletar produto #'{produto_nome}', {error_msg}")
-        return {"mesage": error_msg}, 404
+        # se o contato não foi encontrado
+        error_msg = "Contato não encontrado :/"
+        logger.warning(f"Erro ao deletar contato #'{contato_nome}', {error_msg}")
+        return {"message": error_msg}, 404
 
 
-@app.post('/cometario', tags=[comentario_tag],
-          responses={"200": ProdutoViewSchema, "404": ErrorSchema})
-def add_comentario(form: ComentarioSchema):
-    """Adiciona de um novo comentário à um produtos cadastrado na base identificado pelo id
-
-    Retorna uma representação dos produtos e comentários associados.
-    """
-    produto_id  = form.produto_id
-    logger.debug(f"Adicionando comentários ao produto #{produto_id}")
-    # criando conexão com a base
-    session = Session()
-    # fazendo a busca pelo produto
-    produto = session.query(Produto).filter(Produto.id == produto_id).first()
-
-    if not produto:
-        # se produto não encontrado
-        error_msg = "Produto não encontrado na base :/"
-        logger.warning(f"Erro ao adicionar comentário ao produto '{produto_id}', {error_msg}")
-        return {"mesage": error_msg}, 404
-
-    # criando o comentário
-    texto = form.texto
-    comentario = Comentario(texto)
-
-    # adicionando o comentário ao produto
-    produto.adiciona_comentario(comentario)
-    session.commit()
-
-    logger.debug(f"Adicionado comentário ao produto #{produto_id}")
-
-    # retorna a representação de produto
-    return apresenta_produto(produto), 200
