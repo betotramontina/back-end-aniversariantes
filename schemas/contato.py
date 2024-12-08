@@ -8,7 +8,6 @@ class ContatoSchema(BaseModel):
     """
     nome: str = "Carlos Araujo"
     celular: str = "61990070205"
-    email: str = "carlinhos@gmail.com"
     data_nascimento: str = "DD-MM-AAAA" 
 
 
@@ -34,7 +33,6 @@ def apresenta_contatos(contatos: List[Contato]):
         result.append({
             "nome": contato.nome,
             "celular": contato.celular,
-            "email": contato.email,
             "data_nascimento": contato.data_nascimento,          
         })
 
@@ -47,7 +45,6 @@ class ContatoViewSchema(BaseModel):
     id: int = 1
     nome: str = "Carlos Araujo"
     celular: str = "61990070205"
-    email: str = "carlinhos@gmail.com"
     data_nascimento: str = "DD-MM-AAAA" 
 
 
@@ -66,6 +63,5 @@ def apresenta_contato(contato: Contato):
         "id": contato.id,
         "nome": contato.nome,
         "celular": contato.celular,
-        "email": contato.email,
         "data_nascimento": contato.data_nascimento,
     }
