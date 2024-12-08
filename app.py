@@ -35,7 +35,6 @@ def add_contato(form: ContatoSchema):
     contato = Contato(
         nome=form.nome,
         celular=form.celular,
-        email=form.email,
         data_nascimento=form.data_nascimento)
     logger.debug(f"Adicionando contato de nome: '{contato.nome}'")
     try:
