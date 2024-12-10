@@ -20,16 +20,18 @@ contato_tag = Tag(name="Contato", description="Adição, visualização e remoç
 
 @app.get('/', tags=[home_tag])
 def home():
-# Redireciona para /openapi, tela que permite a escolha do estilo de documentação.
+""" Redireciona para /openapi, tela que permite a escolha do estilo de documentação.
+"""
     return redirect('/openapi')
 
 
 @app.post('/contato', tags=[contato_tag],
           responses={"200": ContatoViewSchema, "409": ErrorSchema, "400": ErrorSchema})
 def add_contato(form: ContatoSchema):
-# Adiciona um novo contato à base de dados
+""" Adiciona um novo contato à base de dados
 
-# Retorna uma representação dos contatos.
+Retorna uma representação dos contatos.
+"""
     contato = Contato(
         nome=form.nome,
         celular=form.celular,
@@ -61,9 +63,10 @@ def add_contato(form: ContatoSchema):
 @app.get('/contatos', tags=[contato_tag],
          responses={"200": ListagemContatosSchema, "404": ErrorSchema})
 def get_contatos():
-    # Busca todos os contatos cadastrados.
+    """ Busca todos os contatos cadastrados.
 
-    # Retorna uma representação da listagem dos contatos.
+    Retorna uma representação da listagem dos contatos.
+    """
     logger.debug(f"Coletando contatos ")
     # Cria conexão com a base
     session = Session()
@@ -83,9 +86,10 @@ def get_contatos():
 @app.get('/contato', tags=[contato_tag],
          responses={"200": ContatoViewSchema, "404": ErrorSchema})
 def get_contato(query: ContatoBuscaSchema):
-    # Busca um contato a partir do nome.
+    """ Busca um contato a partir do nome.
 
-    # Retorna uma representação do contato.
+    Retorna uma representação do contato.
+    """
     contato_nome = query.nome
     logger.debug(f"Coletando dados sobre contato #{contato_nome}")
     # Cria conexão com a base
@@ -107,9 +111,10 @@ def get_contato(query: ContatoBuscaSchema):
 @app.delete('/contato', tags=[contato_tag],
             responses={"200": ContatoDelSchema, "404": ErrorSchema})
 def del_contato(query: ContatoBuscaSchema):
-    # Deleta um contato a partir do nome informado.
+    """ Deleta um contato a partir do nome informado.
 
-    # Retorna uma mensagem de confirmação da remoção.
+    Retorna uma mensagem de confirmação da remoção.
+    """
     contato_nome = unquote(unquote(query.nome))
     print(contato_nome)
     logger.debug(f"Deletando dados sobre o contato #{contato_nome}")
