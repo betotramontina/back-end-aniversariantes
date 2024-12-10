@@ -8,10 +8,10 @@
 ### Com a Agenda Aniversariantes você tem uma forma segura e não invasiva de guardar essas datas e contatos especiais, sem a obrigação de se cadastrar em qualquer site.  
 
 # Instruções de instalação
-### Instalar Python
-### Instalar Visual Studio Code (ou outra ferramenta conveniente)
-### Utilizar terminal do Linux
-### Abrir o VS Code e clonar o seguinte repositório: 
+#### Instalar Python
+#### Instalar Visual Studio Code (ou outra ferramenta conveniente)
+#### Utilizar terminal Linux
+### Abrir VS Code e clonar o seguinte repositório: https://github.com/betotramontina/back-end-aniversariantes.git 
 ###
 
 ### Cria ambiente virtual: python3 -m venv venv_api
