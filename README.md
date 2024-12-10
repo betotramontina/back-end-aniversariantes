@@ -1,9 +1,9 @@
 # Título: Agenda Aniversariantes 
-Essa é uma alternativa para você, que assim como eu, não tem Facebook, Instagram ou qualquer outra mídia social, e por isso perdeu sua agenda de aniversários. Com a Agenda Aniversariantes você volta a ter uma forma de guardar  
+## Essa é uma alternativa para você, que assim como eu, não tem Facebook, Instagram ou qualquer outra mídia social, e por isso perdeu a sua agenda de aniversários. 
+## Com a Agenda Aniversariantes você tem uma forma de guardar essas datas e contatos especiais, sem a obrigação de cadastro em qualquer mídia social.  
+
 # back-end-aniversariantes
 MVP - Roberto Tramontina Araujo - Disciplina: Sprint: Desenvolvimento Full Stack Básico - Lista de Contatos
-
-<h1 align="center"> Roberto </h1>
 
 
 Instalar python
